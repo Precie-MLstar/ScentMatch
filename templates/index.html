@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScentMatch</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page">
+        <div class="content">
+            <p class="eyebrow">YOUR SCENT. YOUR SIGNATURE.</p>
+            <h1>What's your scent mood?</h1>
+            <p class="intro">Find a fragrance that matches your energy.</p>
+
+            <form method="POST" action="{{ url_for('recommend') }}">
+                <label>What's your mood?</label>
+                <select name="mood" required>
+                    <option value="romantic" {% if mood == 'romantic' %}selected{% endif %}>Romantic</option>
+                    <option value="confident" {% if mood == 'confident' %}selected{% endif %}>Confident</option>
+                    <option value="relaxed" {% if mood == 'relaxed' %}selected{% endif %}>Relaxed</option>
+                    <option value="mysterious" {% if mood == 'mysterious' %}selected{% endif %}>Mysterious</option>
+                    <option value="sensual" {% if mood == 'sensual' %}selected{% endif %}>Sensual</option>
+                </select>
+
+                <label>Which scent family do you prefer?</label>
+                <select name="scent" required>
+                    <option value="floral" {% if scent == 'floral' %}selected{% endif %}>Floral</option>
+                    <option value="citrus" {% if scent == 'citrus' %}selected{% endif %}>Citrus</option>
+                    <option value="woody" {% if scent == 'woody' %}selected{% endif %}>Woody</option>
+                    <option value="gourmand" {% if scent == 'gourmand' %}selected{% endif %}>Gourmand</option>
+                    <option value="fresh" {% if scent == 'fresh' %}selected{% endif %}>Fresh</option>
+                    <option value="amber-oriental" {% if scent == 'amber-oriental' %}selected{% endif %}>Amber-Oriental</option>
+                </select>
+
+                <label>What's the occasion?</label>
+                <select name="occasion" required>
+                    <option value="everyday" {% if occasion == 'everyday' %}selected{% endif %}>Everyday</option>
+                    <option value="date night" {% if occasion == 'date night' %}selected{% endif %}>Date night</option>
+                    <option value="special occasion" {% if occasion == 'special occasion' %}selected{% endif %}>Special occasion</option>
+                    <option value="casual" {% if occasion == 'casual' %}selected{% endif %}>Casual</option>
+                </select>
+
+                <button type="submit">Discover</button>
+            </form>
+
+
+            {% if recommendation %}
+                <div class="card">
+                    <h2>{{ mood.title() }} mood</h2>
+                    <p>Your fragrance match is <strong>{{ recommendation.name }}</strong>.</p>
+<p>{{ recommendation.description }}</p>
+<p>{{ recommendation.reason }}</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="visual">
+            <img src="{{ url_for('serve_image') }}" alt="ScentMatch fragrance">
+        </div>
+    </div>
+</body>
+</html>
